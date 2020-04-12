@@ -1,0 +1,16 @@
+# For Java 8
+FROM openjdk:8-jdk-alpine
+
+# Set the working directory.
+WORKDIR /auth
+
+#run the app as a non-root user
+RUN addgroup -S spring && adduser -S spring -G spring
+USER spring:spring
+
+ARG JAR_FILE=target/AuthenticationApp-0.0.1-SNAPSHOT.jar
+
+COPY ${JAR_FILE} /auth/app.jar
+
+# java -jar /auth/app
+ENTRYPOINT ["java","-jar","/auth/app.jar"]
